@@ -33,3 +33,12 @@ public class EventChangeScene : EventData
         this.stag = stag;
     }
 }
+
+public class EventTouch : EventData
+{
+    public Vector3 pos { get; private set; }
+    public EventTouch(EventID eid, Vector3 pos) : base(eid)
+    {
+        this.pos = pos;
+    }
+}

@@ -13,7 +13,7 @@ public enum GameDir
 /// 玩家操作控制器
 /// 
 /// </summary>
-public class GamePlayerController{
+public class GameTouchController{
 	float slideDis = 20;
 
 	public Vector3 m_InputStartVec;
@@ -58,14 +58,18 @@ public class GamePlayerController{
 		{
 			m_InputStartVec = Input.mousePosition;
 			isStartMouse = true;
+
+            (new EventTouch(EventID.EVENT_TOUCH_DOWN, m_InputStartVec)).Send();
 		}
 		else if (Input.GetMouseButtonUp(0))
-		{
-
+        {
+            (new EventTouch(EventID.EVENT_TOUCH_UP, Input.mousePosition)).Send();
 		}
 		if (isStartMouse && Input.GetMouseButton(0))
 		{
 			m_InputFinalVec = Input.mousePosition;
+
+            (new EventTouch(EventID.EVENT_TOUCH_MOVE, Input.mousePosition)).Send();
 
 			float vy = m_InputFinalVec.y - m_InputStartVec.y;
 			float vx = m_InputFinalVec.x - m_InputStartVec.x;
@@ -130,7 +134,26 @@ public class GamePlayerController{
 
 	//捕捉到动作
 	public void ChangeDirection(GameDir dir){
-		
+        float x = 0;
+        float y = 0;
+        switch(dir){
+            case GameDir.Up:
+                y = 1;
+                break;
+            case GameDir.Down:
+                y = -1;
+                break;
+            case GameDir.Left:
+                x = -1;
+                break;
+            case GameDir.Right:
+                x = 1;
+                break;
+
+        }
+
+        (new EventTouch(EventID.EVENT_TOUCH_SWEEP, new Vector3(x,y,0))).Send();
+
 	}
 
 }
