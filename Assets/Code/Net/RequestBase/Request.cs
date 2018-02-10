@@ -11,7 +11,6 @@ public abstract class Request {
 	{
 		writer.WriteSInt32(GetProtocol());
 		writer.WriteByte(0);
-
 	}
 
 	public virtual void Deserialize(DataStream reader)
